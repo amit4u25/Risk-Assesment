@@ -33,9 +33,8 @@ public class RiskEvaluation {
 	private String releaseVersion;
 
 	@NotBlank
-	private Boolean riskAssesed;
+	private String riskAssesed;
 
-	@NotBlank
 	private Double riskScore;
 
 	@Column(nullable = false, updatable = false)
@@ -72,11 +71,11 @@ public class RiskEvaluation {
 		this.releaseVersion = releaseVersion;
 	}
 
-	public Boolean getRiskAssesed() {
+	public String getRiskAssesed() {
 		return riskAssesed;
 	}
 
-	public void setRiskAssesed(Boolean riskAssesed) {
+	public void setRiskAssesed(String riskAssesed) {
 		this.riskAssesed = riskAssesed;
 	}
 
