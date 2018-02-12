@@ -1,54 +1,111 @@
-# Spring Boot, MySQL, JPA, Hibernate Rest API Tutorial
+#Step 1: Create Tier 1 Question
 
-Build Restful CRUD API for a simple Employee management application using Spring Boot, Mysql, JPA and Hibernate.
+Api: http://localhost:8080/maintenance/create
+Method: POST
+Request: {
+           "changeType":"Are you rolling out new or modifying hardware?"
+         }
 
-## Requirements
+Response: {
+          "id": 7,
+          "changeType": "Are you rolling out new or modifying hardware?",
+          "createdAt": 1518367614392,
+          "updatedAt": 1518367614392
+          }
+          
+          
+#Step 2: Add all the Tier 2 question into tier 1
 
-1. Java - 1.8.x
+Api: http://localhost:8080/tierTwoQuestion/create
+Method: POST
+Request: {
+           "question":"Is this new software for AWS/production?",
+           "maintenanceType":{
+             "id":9 
+           }
+         }
 
-2. Maven - 3.x.x
+Response: {
+          "id": 14,
+          "question": "Is this new software for AWS/production?",
+          "createdAt": 1518375135034,
+          "updatedAt": 1518375135034,
+          "maintenanceType":{
+          "id": 9,
+          "changeType": null,
+          "createdAt": null,
+          "updatedAt": null,
+          "tierTwoQuestion":[]
+          }
+          }
+ Special comments: here maintenanceType id is tier one question id.
+ 
+ #Step 3: Add all tier 3 question into tier 2 question
+ 
+Api: http://localhost:8080/tierThreeQuestion/create
+Method: POST
+Request: {
+           "question":"Is this Business Critical functionality?",
+           "weight": 3.0,
+           "tierTwoQuestion":{
+             "id":20
+           }
+         }
 
-3. Mysql - 5.x.x
-
-## Steps to Setup
-
-**1. Create Mysql database**
-create database employee_management
-
-
-**3. Change mysql username and password as per your installation**
-
-+ open `src/main/resources/application.properties`
-
-+ change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
-
-**2. Build and run the app using maven**
-
-```bash
-mvn package
-java -jar target/employee-management-1.0.0.jar
-```
-
-Alternatively, you can run the app without packaging it using -
-
-```bash
-mvn spring-boot:run
-```
-
-The app will start running at <http://localhost:8080>.
-
-## Explore Rest APIs
-
-The app defines following CRUD APIs.
-
-    GET /api/employees
-    
-    POST /api/employee
-    
-    GET /api/employee/{employeeId}
-    
-    PUT /api/employee/{employeeId}
-    
-    DELETE /api/employee/{employeeId}
-
-You can test them using postman or any other rest client.
+Response: {
+          "id": 23,
+          "question": "Is this Business Critical functionality?",
+          "weight": 3,
+          "createdAt": 1518456697338,
+          "updatedAt": 1518456697338
+          }
+ Special comments: here we will pass tierTwoQuestion id.
+ 
+ #Step 4: To dispaly all the question on the screen.
+ 
+ Api: http://localhost:8080/maintenance/all
+ Method: GET
+ 
+ Response: [
+           {
+           "id": 18,
+           "changeType": "Are you rolling out new/modified software?",
+           "createdAt": 1518380484934,
+           "updatedAt": 1518380484934,
+           "tierTwoQuestion":[
+           {"id": 20, "question": "Is this new software for AWS/production?", "tierThreeQuestion":[{"id": 23,…},
+           {"id": 22, "question": "Is this release modifying existing code?", "tierThreeQuestion":[], "createdAt": 1518451898646,…}
+           ]
+           },
+           {
+           "id": 19,
+           "changeType": "Are you rolling out new or modifying hardware?",
+           "createdAt": 1518380512788,
+           "updatedAt": 1518380512788,
+           "tierTwoQuestion":[]
+           }
+           ]
+           
+   #Step 5: Calculate risk score:
+   
+   Api: http://localhost:8080/score/evaluate
+   Method: POST
+   Request: [
+              {
+                "questionId" : 23,
+                "answer" : true,
+                "bap" : "BAP",
+                "releaseVersion": "1.0"
+                
+              },
+              {
+                "questionId" : 2,
+                "answer" : false
+              }
+            ]
+   
+   Response: {
+             "performanceTestingRequired": true,
+             "riskcategory": "Medium",
+             "score": 2
+             }
