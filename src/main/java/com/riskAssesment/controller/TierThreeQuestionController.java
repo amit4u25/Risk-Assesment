@@ -32,6 +32,7 @@ public class TierThreeQuestionController {
 	@PostMapping("/create")
 	// The @Valid annotation makes sure that the request body is valid.
 	public TierThreeQuestion createQuestion(@Valid @RequestBody TierThreeQuestion tierThreeQuestion) {
+		System.out.println("tierThreeQuestion : "+tierThreeQuestion);
 		return tierThreeQuestionService.createQuestion(tierThreeQuestion);
 	}
 

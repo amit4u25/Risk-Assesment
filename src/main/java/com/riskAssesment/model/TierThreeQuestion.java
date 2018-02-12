@@ -19,7 +19,7 @@ import java.util.Date;
  *
  */
 @Entity
-@Table(name = "tier_two_question")
+@Table(name = "tier_three_question")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 public class TierThreeQuestion implements Serializable {
