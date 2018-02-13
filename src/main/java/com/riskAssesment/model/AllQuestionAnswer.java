@@ -1,6 +1,6 @@
 package com.riskAssesment.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @Entity annotation. It is used to mark the class as a persistent Java class.
@@ -12,29 +12,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class AllQuestionAnswer {
 
-	private Long questionId;
-
-	private Boolean answer;
-	
 	private String bap;
-
 	private String releaseVersion;
-
-	public Long getQuestionId() {
-		return questionId;
-	}
-
-	public void setQuestionId(Long questionId) {
-		this.questionId = questionId;
-	}
-
-	public Boolean getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(Boolean answer) {
-		this.answer = answer;
-	}
+	private List<QuestionAnswer> questionAnswer;
 
 	public String getBap() {
 		return bap;
@@ -51,4 +31,13 @@ public class AllQuestionAnswer {
 	public void setReleaseVersion(String releaseVersion) {
 		this.releaseVersion = releaseVersion;
 	}
+
+	public List<QuestionAnswer> getQuestionAnswer() {
+		return questionAnswer;
+	}
+
+	public void setQuestionAnswer(List<QuestionAnswer> questionAnswer) {
+		this.questionAnswer = questionAnswer;
+	}
+
 }

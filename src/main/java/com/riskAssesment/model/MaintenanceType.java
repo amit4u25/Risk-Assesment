@@ -45,6 +45,7 @@ public class MaintenanceType implements Serializable {
 	private Long id;
 
 	@NotBlank
+	@Column(unique=true)
 	private String changeType;
 
 	@Column(nullable = false, updatable = false)

@@ -33,6 +33,7 @@ public class TierThreeQuestion implements Serializable {
 	private Long id;
 
 	@NotBlank
+	@Column(unique=true)
 	private String question;
 	
 	private double weight;

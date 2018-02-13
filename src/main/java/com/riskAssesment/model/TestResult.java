@@ -11,10 +11,10 @@ package com.riskAssesment.model;
 public class TestResult {
 
 	private Boolean performanceTestingRequired;
-	
 	private String riskcategory;
-
 	private double score;
+	private String bap;
+	private String releaseVersion;
 
 	public Boolean getPerformanceTestingRequired() {
 		return performanceTestingRequired;
@@ -38,6 +38,22 @@ public class TestResult {
 
 	public void setScore(double score) {
 		this.score = score;
+	}
+
+	public String getBap() {
+		return bap;
+	}
+
+	public void setBap(String bap) {
+		this.bap = bap;
+	}
+
+	public String getReleaseVersion() {
+		return releaseVersion;
+	}
+
+	public void setReleaseVersion(String releaseVersion) {
+		this.releaseVersion = releaseVersion;
 	}
 	
 }

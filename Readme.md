@@ -90,22 +90,23 @@ Response: {
    
    Api: http://localhost:8080/score/evaluate
    Method: POST
-   Request: [
-              {
-                "questionId" : 23,
-                "answer" : true,
-                "bap" : "BAP",
-                "releaseVersion": "1.0"
-                
-              },
-              {
-                "questionId" : 2,
-                "answer" : false
-              }
-            ]
+   Request: {
+  				"bap" : "BAP1",
+   			 	"releaseVersion": "1.0",
+  				"questionAnswer":[{
+    					"questionId" : 23,
+    					"answer" : false
+  				},
+  				{
+    					"questionId" : 31,
+    					"answer" : false
+  				}]
+			}
    
    Response: {
-             "performanceTestingRequired": true,
-             "riskcategory": "Medium",
-             "score": 2
-             }
+				"performanceTestingRequired": false,
+				"riskcategory": "Low",
+				"score": 0,
+				"bap": "BAP1",
+				"releaseVersion": "1.0"
+			}

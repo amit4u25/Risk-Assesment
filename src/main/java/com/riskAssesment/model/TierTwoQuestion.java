@@ -47,6 +47,7 @@ public class TierTwoQuestion implements Serializable {
 	private Long id;
 
 	@NotBlank
+	@Column(unique=true)
 	private String question;
 
 	@ManyToOne

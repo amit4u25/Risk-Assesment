@@ -1,12 +1,11 @@
 package com.riskAssesment.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.riskAssesment.model.AllQuestionAnswer;
+import com.riskAssesment.model.QuestionAnswer;
 import com.riskAssesment.model.RiskEvaluation;
 import com.riskAssesment.model.TestResult;
 import com.riskAssesment.model.TierThreeQuestion;
@@ -26,33 +25,38 @@ public class ScoringService {
 	@Autowired
 	RiskEvalutionRepository riskEvalutionRepository;
 
-	public TestResult calculateRiskScore(List<AllQuestionAnswer> allQuestionsAnswers) {
+	public TestResult calculateRiskScore(AllQuestionAnswer allQuestionsAnswer) {
 		double riskScore = 0.0;
 		long numberOfQuestion = 0;
 		double averageRiskScore = 0.0;
 		String riskAssesed = null;
 		RiskEvaluation riskEvaluation = new RiskEvaluation();
 		TestResult testResult = new TestResult();
-		for (AllQuestionAnswer allQuestionAnswer : allQuestionsAnswers) {
-
-			if (!StringUtils.isEmpty(allQuestionAnswer.getBap())) {
-				riskEvaluation.setBap(allQuestionAnswer.getBap());
-			}
-
-			if (!StringUtils.isEmpty(allQuestionAnswer.getReleaseVersion())) {
-				riskEvaluation.setReleaseVersion(allQuestionAnswer.getReleaseVersion());
-			}
-
-			if (allQuestionAnswer.getAnswer()) {
-				TierThreeQuestion tierThreeQuestion = tierThreeQuestionRepository
-						.findOne(allQuestionAnswer.getQuestionId());
-				riskScore = riskScore + tierThreeQuestion.getWeight();
-			} else {
-				riskScore = riskScore + 1;
-			}
-			numberOfQuestion++;
+		if (!StringUtils.isEmpty(allQuestionsAnswer.getBap())) {
+			riskEvaluation.setBap(allQuestionsAnswer.getBap());
+			testResult.setBap(allQuestionsAnswer.getBap());
 		}
-		averageRiskScore = riskScore / numberOfQuestion;
+
+		if (!StringUtils.isEmpty(allQuestionsAnswer.getReleaseVersion())) {
+			riskEvaluation.setReleaseVersion(allQuestionsAnswer.getReleaseVersion());
+			testResult.setReleaseVersion(allQuestionsAnswer.getReleaseVersion());
+		}
+		for (QuestionAnswer questionAnswer : allQuestionsAnswer.getQuestionAnswer()) {
+
+			if (questionAnswer.getAnswer()) {
+				TierThreeQuestion tierThreeQuestion = tierThreeQuestionRepository
+						.findOne(questionAnswer.getQuestionId());
+				riskScore = riskScore + tierThreeQuestion.getWeight();
+				numberOfQuestion++;
+			}
+			// else {
+			// riskScore = riskScore + 1;
+			// }
+
+		}
+		if (riskScore > 0.0) {
+			averageRiskScore = riskScore / numberOfQuestion;
+		}
 		riskEvaluation.setRiskScore(averageRiskScore);
 
 		if (averageRiskScore <= 1) {
@@ -66,6 +70,7 @@ public class ScoringService {
 			testResult.setPerformanceTestingRequired(true);
 		}
 		riskEvaluation.setRiskAssesed(riskAssesed);
+		// Save
 		riskEvalutionRepository.save(riskEvaluation);
 
 		// Set return response
