@@ -63,6 +63,20 @@ public class MaintenanceType implements Serializable {
 
 	public MaintenanceType() {
 	}
+	
+
+	public MaintenanceType(Long id, String changeType) {
+		super();
+		this.id = id;
+		this.changeType = changeType;
+	}
+
+
+	public MaintenanceType(String changeType) {
+		super();
+		this.changeType = changeType;
+	}
+
 
 	public Set<TierTwoQuestion> getTierTwoQuestion() {
 		return tierTwoQuestion;

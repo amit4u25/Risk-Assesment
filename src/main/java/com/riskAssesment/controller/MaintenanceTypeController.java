@@ -1,19 +1,22 @@
 package com.riskAssesment.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.riskAssesment.model.MaintenanceType;
-import com.riskAssesment.model.TierTwoQuestion;
 import com.riskAssesment.service.MaintenanceTypeService;
 
 /**
@@ -30,6 +33,7 @@ import com.riskAssesment.service.MaintenanceTypeService;
 @RestController
 @RequestMapping("/maintenance")
 public class MaintenanceTypeController {
+	final static Logger logger = Logger.getLogger(MaintenanceTypeController.class);
 
 	@Autowired
 	MaintenanceTypeService maintenanceTypeService;
@@ -42,15 +46,23 @@ public class MaintenanceTypeController {
 
 	@GetMapping("/all")
 	public List<MaintenanceType> getAllMaintenanceType() {
-		List<MaintenanceType> abc = maintenanceTypeService.getAllMaintenanceType();
-//		for (MaintenanceType maintenanceType : abc) {
-//			System.out.println("maintenanceType :" + maintenanceType.getChangeType());
-//			Set<TierTwoQuestion> dfdf = maintenanceType.getTierTwoQuestion();
-//			for (TierTwoQuestion fgfg : dfdf) {
-//				System.out.println("fgfg :" + fgfg.getQuestion());
-//
-//			}
-//		}
-		 return maintenanceTypeService.getAllMaintenanceType();
+		return maintenanceTypeService.getAllMaintenanceType();
+	}
+	
+	/**
+	 * Get the MaintenanceType by ID
+	 * 
+	 * @param id of MaintenanceType
+	 * @return MaintenanceType
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<MaintenanceType> getMaintenanceType(@PathVariable("id") Long id) {
+		MaintenanceType maintenanceType = maintenanceTypeService.getById(id);
+		if (maintenanceType == null) {
+			logger.debug("MaintenanceType with id " + id + " does not exists");
+			return new ResponseEntity<MaintenanceType>(HttpStatus.NOT_FOUND);
+		}
+		logger.debug("Found maintenanceType:: " + maintenanceType);
+		return new ResponseEntity<MaintenanceType>(maintenanceType, HttpStatus.OK);
 	}
 }

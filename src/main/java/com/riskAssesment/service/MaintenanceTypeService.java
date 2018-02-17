@@ -32,5 +32,9 @@ public class MaintenanceTypeService {
 	public List<MaintenanceType> getAllMaintenanceType() {
 		return maintenanceTypeRepository.findAll();
 	}
+	
+	public MaintenanceType getById(Long id) {
+		return maintenanceTypeRepository.findOne(id);
+	}
 
 }
