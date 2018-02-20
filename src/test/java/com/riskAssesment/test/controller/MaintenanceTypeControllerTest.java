@@ -43,12 +43,12 @@ public class MaintenanceTypeControllerTest {
 	public void testGetMaintenanceType() throws Exception {
 
 		// prepare data and mock's behaviour
-		MaintenanceType empStub = new MaintenanceType("Software");
+		MaintenanceType empStub = new MaintenanceType(1L, "Software");
 		when(maintenanceService.getById(any(Long.class))).thenReturn(empStub);
 
 		// execute
 		MvcResult result = mockMvc
-				.perform(MockMvcRequestBuilders.get(URL + "{id}", new Long(1)).accept(MediaType.APPLICATION_JSON_UTF8))
+				.perform(MockMvcRequestBuilders.get(URL + "{id}", new Long(18)).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andReturn();
 
 		// verify
@@ -69,8 +69,8 @@ public class MaintenanceTypeControllerTest {
 	public void testGetAllMaintenanceType() throws Exception {
 
 		// prepare data and mock's behaviour
-		List<MaintenanceType> empList = buildMaintenanceType();
-		when(maintenanceService.getAllMaintenanceType()).thenReturn(empList);
+		List<MaintenanceType> maintenanceList = buildMaintenanceType();
+		when(maintenanceService.getAllMaintenanceType()).thenReturn(maintenanceList);
 
 		// execute
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL +"/all").accept(MediaType.APPLICATION_JSON_UTF8))
@@ -91,7 +91,7 @@ public class MaintenanceTypeControllerTest {
 				.jsonToList(result.getResponse().getContentAsString(), token);
 
 		assertNotNull("MaintenanceType not found", maintenanceTypeListResult);
-		assertEquals("Incorrect MaintenanceType List", empList.size(), maintenanceTypeListResult.size());
+		assertEquals("Incorrect MaintenanceType List", maintenanceList.size(), maintenanceTypeListResult.size());
 
 	}
 

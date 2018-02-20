@@ -46,6 +46,8 @@ public class MaintenanceTypeController {
 
 	@GetMapping("/all")
 	public List<MaintenanceType> getAllMaintenanceType() {
+		System.out.println("Hiii..");
+		logger.debug("Found maintenanceType:: ");
 		return maintenanceTypeService.getAllMaintenanceType();
 	}
 	
