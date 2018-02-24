@@ -1,10 +1,13 @@
 package com.riskAssesment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.riskAssesment.model.AllQuestionAnswer;
+import com.riskAssesment.model.MaintenanceType;
 import com.riskAssesment.model.QuestionAnswer;
 import com.riskAssesment.model.RiskEvaluation;
 import com.riskAssesment.model.TestResult;
@@ -49,9 +52,6 @@ public class ScoringService {
 				riskScore = riskScore + tierThreeQuestion.getWeight();
 				numberOfQuestion++;
 			}
-			// else {
-			// riskScore = riskScore + 1;
-			// }
 
 		}
 		if (riskScore > 0.0) {
@@ -77,5 +77,12 @@ public class ScoringService {
 		testResult.setScore(averageRiskScore);
 		testResult.setRiskcategory(riskAssesed);
 		return testResult;
+	}
+
+	/*
+	 * Get all test result
+	 */
+	public List<RiskEvaluation> getAllTestResult() {
+		return riskEvalutionRepository.findAll();
 	}
 }

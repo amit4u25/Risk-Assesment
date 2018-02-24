@@ -3,6 +3,7 @@ package com.riskAssesment.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.riskAssesment.service.TierThreeQuestionService;
  *                 all the apis in this controller will start with /api
  **/
 @RestController
+@CrossOrigin
 @RequestMapping("/tierThreeQuestion")
 public class TierThreeQuestionController {
 
