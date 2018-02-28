@@ -53,20 +53,4 @@ public class MaintenanceTypeController {
 		return maintenanceTypeService.getAllMaintenanceType();
 	}
 	
-	/**
-	 * Get the MaintenanceType by ID
-	 * 
-	 * @param id of MaintenanceType
-	 * @return MaintenanceType
-	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<MaintenanceType> getMaintenanceType(@PathVariable("id") Long id) {
-		MaintenanceType maintenanceType = maintenanceTypeService.getById(id);
-		if (maintenanceType == null) {
-			logger.debug("MaintenanceType with id " + id + " does not exists");
-			return new ResponseEntity<MaintenanceType>(HttpStatus.NOT_FOUND);
-		}
-		logger.debug("Found maintenanceType:: " + maintenanceType);
-		return new ResponseEntity<MaintenanceType>(maintenanceType, HttpStatus.OK);
-	}
 }

@@ -45,7 +45,7 @@ public class MaintenanceType implements Serializable {
 	private Long id;
 
 	@NotBlank
-	@Column(unique=true)
+	@Column(unique = true)
 	private String changeType;
 
 	@Column(nullable = false, updatable = false)
@@ -58,12 +58,8 @@ public class MaintenanceType implements Serializable {
 	@LastModifiedDate
 	private Date updatedAt;
 
-	@OneToMany(mappedBy = "maintenanceType", cascade = CascadeType.ALL)
-	private Set<TierTwoQuestion> tierTwoQuestion;
-
 	public MaintenanceType() {
 	}
-	
 
 	public MaintenanceType(Long id, String changeType) {
 		super();
@@ -71,20 +67,9 @@ public class MaintenanceType implements Serializable {
 		this.changeType = changeType;
 	}
 
-
 	public MaintenanceType(String changeType) {
 		super();
 		this.changeType = changeType;
-	}
-
-
-	public Set<TierTwoQuestion> getTierTwoQuestion() {
-		return tierTwoQuestion;
-	}
-
-	//
-	public void setTierTwoQuestion(Set<TierTwoQuestion> tierTwoQuestion) {
-		this.tierTwoQuestion = tierTwoQuestion;
 	}
 
 	public Long getId() {
