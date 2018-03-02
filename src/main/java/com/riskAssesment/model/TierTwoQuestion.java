@@ -47,15 +47,12 @@ public class TierTwoQuestion implements Serializable {
 	private Long id;
 
 	@NotBlank
-	@Column(unique=true)
+	@Column(unique = true)
 	private String question;
 
 	@ManyToOne
 	@JoinColumn(name = "maintenanceId", nullable = false)
 	private MaintenanceType maintenanceType;
-
-	@OneToMany(mappedBy = "tierTwoQuestion", cascade = CascadeType.ALL)
-	private Set<TierThreeQuestion> tierThreeQuestion;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -105,14 +102,6 @@ public class TierTwoQuestion implements Serializable {
 
 	public void setMaintenanceType(MaintenanceType maintenanceType) {
 		this.maintenanceType = maintenanceType;
-	}
-
-	public Set<TierThreeQuestion> getTierThreeQuestion() {
-		return tierThreeQuestion;
-	}
-
-	public void setTierThreeQuestion(Set<TierThreeQuestion> tierThreeQuestion) {
-		this.tierThreeQuestion = tierThreeQuestion;
 	}
 
 }
