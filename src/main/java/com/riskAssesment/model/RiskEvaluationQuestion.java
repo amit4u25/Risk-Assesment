@@ -9,6 +9,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,21 +30,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @Entity
-@Table(name = "risk_evaluation_tier")
+@Table(name = "risk_evaluation_question")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public class RiskEvaluationTier implements Serializable {
+public class RiskEvaluationQuestion implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotBlank
-	@Column(unique = true)
-	private String tier;
+	@Column(unique=true)
+	private String question;
+
+	@ManyToOne
+	@JoinColumn(name = "tierId", nullable = false)
+	private RiskEvaluationTier riskEvaluationTier;
+	
+	@Column(columnDefinition="Decimal(10,2) default '0.00'")
+	private double weight;
+
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -54,20 +65,6 @@ public class RiskEvaluationTier implements Serializable {
 	@LastModifiedDate
 	private Date updatedAt;
 
-	public RiskEvaluationTier() {
-	}
-
-	public RiskEvaluationTier(Long id, String tier) {
-		super();
-		this.id = id;
-		this.tier = tier;
-	}
-
-	public RiskEvaluationTier(String tier) {
-		super();
-		this.tier = tier;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -76,12 +73,12 @@ public class RiskEvaluationTier implements Serializable {
 		this.id = id;
 	}
 
-	public String getTier() {
-		return tier;
+	public String getQuestion() {
+		return question;
 	}
 
-	public void setTier(String tier) {
-		this.tier = tier;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
 	public Date getCreatedAt() {
@@ -99,4 +96,22 @@ public class RiskEvaluationTier implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+//	public RiskEvaluationTier getRiskEvaluationTier() {
+//		return riskEvaluationTier;
+//	}
+
+	public void setRiskEvaluationTier(RiskEvaluationTier riskEvaluationTier) {
+		this.riskEvaluationTier = riskEvaluationTier;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+
 }

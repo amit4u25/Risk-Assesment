@@ -110,3 +110,113 @@ Response: {
 				"bap": "BAP1",
 				"releaseVersion": "1.0"
 			}
+
+			
+		#New Artitecture 
+			
+	 #Step 1: Create tier:
+   
+   Api: http://localhost:8080/tier/create
+   Method: POST
+   Request: {
+  		"tier":"Tier Three"
+	}
+   
+   Response: {
+	"id": 3,
+	"tier": "Tier Three",
+	"createdAt": 1522260968360,
+	"updatedAt": 1522260968360
+}
+
+#Step 2: Get all Tier:
+   
+   Api: http://localhost:8080/tier/all
+   Method: GET
+   
+   
+   Response: [
+		{
+			"id": 1,
+			"tier": "Tier One",
+			"createdAt": 1522260955500,
+			"updatedAt": 1522260955500
+		},
+		{
+			"id": 2,
+			"tier": "Tier Two",
+			"createdAt": 1522260962124,
+			"updatedAt": 1522260962124
+		},
+		{
+			"id": 3,
+			"tier": "Tier Three",
+			"createdAt": 1522260968360,
+			"updatedAt": 1522260968360
+		}
+	]
+	
+#Step 3: Create  tier1 question:
+
+ Api: http://localhost:8080/tier/create
+   Method: POST
+   Request:{
+  	"question":"Software",
+ 	 "riskEvaluationTier":{
+    		"id":1
+  		}
+	}
+   
+   Response: {
+		"id": 4,
+		"question": "Software",
+		"weight": 0,
+		"createdAt": 1522265881949,
+		"updatedAt": 1522265881949
+	}
+	
+#Step 4: Create  tier2 question:
+
+ Api: http://localhost:8080/tier/create
+   Method: POST
+   Request:
+		{
+	  		"question":"Is this new software for AWS/production?",
+	  		"riskEvaluationTier":{
+	    			"id":2
+	  		}
+		}
+   
+   Response: 
+	{
+		"id": 5,
+		"question": "Is this new software for AWS/production?",
+		"weight": 0,
+		"createdAt": 1522266343645,
+		"updatedAt": 1522266343645
+	}
+	
+#Step 5: Create  tier3 question:
+
+ Api: http://localhost:8080/tier/create
+   Method: POST
+   Request:
+	{
+	  "question":"Is this Business Critical functionality?",
+	  "weight" : 2.0,
+	  "riskEvaluationTier":{
+	    "id":3
+	  }
+	}
+   
+   Response: 
+	{
+		"id": 6,
+		"question": "Is this Business Critical functionality?",
+		"weight": 2,
+		"createdAt": 1522266474013,
+		"updatedAt": 1522266474013
+	}
+	
+	
+	
