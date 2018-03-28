@@ -38,7 +38,7 @@ public class ScoringController {
 
 	@PostMapping("/evaluate")
 	// The @Valid annotation makes sure that the request body is valid.
-	public TestResult createMaintenanceType(@Valid @RequestBody AllQuestionAnswer allQuestionAnswers) {
+	public TestResult calculatRiskScore(@Valid @RequestBody AllQuestionAnswer allQuestionAnswers) {
 		return scoringService.calculateRiskScore(allQuestionAnswers);
 	}
 	
