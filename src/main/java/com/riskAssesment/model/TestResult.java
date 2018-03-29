@@ -1,5 +1,7 @@
 package com.riskAssesment.model;
 
+import java.util.List;
+
 /**
  * @Entity annotation. It is used to mark the class as a persistent Java class.
  * @Table annotation is used to provide the details of the table that this
@@ -15,6 +17,7 @@ public class TestResult {
 	private double score;
 	private String bap;
 	private String releaseVersion;
+	private List<QuestionAnswer> questionAnswer;
 
 	public Boolean getPerformanceTestingRequired() {
 		return performanceTestingRequired;
@@ -46,6 +49,14 @@ public class TestResult {
 
 	public void setBap(String bap) {
 		this.bap = bap;
+	}
+
+	public List<QuestionAnswer> getQuestionAnswer() {
+		return questionAnswer;
+	}
+
+	public void setQuestionAnswer(List<QuestionAnswer> questionAnswer) {
+		this.questionAnswer = questionAnswer;
 	}
 
 	public String getReleaseVersion() {

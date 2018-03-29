@@ -30,10 +30,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @Entity
-@Table(name = "risk_evaluation_question")
+@Table(name = "risk_evaluation_question_answer")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public class RiskEvaluationQuestion implements Serializable {
+public class RiskEvaluationQuestionAnswer implements Serializable {
 	/**
 	 * 
 	 */
@@ -43,16 +43,15 @@ public class RiskEvaluationQuestion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotBlank
-	@Column(unique=true)
-	private String question;
-
-	@ManyToOne
-	@JoinColumn(name = "tierId", nullable = false)
-	private RiskEvaluationTier riskEvaluationTier;
+	 
+	private Long questionId;
 	
-	@Column(columnDefinition="Decimal(10,2) default '0.00'")
-	private double weight;
+	private Boolean answer;
+	
+	@NotBlank
+	private String bapId;
+
+	
 
 
 	@Column(nullable = false, updatable = false)
@@ -73,12 +72,30 @@ public class RiskEvaluationQuestion implements Serializable {
 		this.id = id;
 	}
 
-	public String getQuestion() {
-		return question;
+	 
+
+	public Long getQuestionId() {
+		return questionId;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
+	}
+
+	public Boolean getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(Boolean answer) {
+		this.answer = answer;
+	}
+
+	public String getBapId() {
+		return bapId;
+	}
+
+	public void setBapId(String bapId) {
+		this.bapId = bapId;
 	}
 
 	public Date getCreatedAt() {
@@ -96,22 +113,5 @@ public class RiskEvaluationQuestion implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public RiskEvaluationTier getRiskEvaluationTier() {
-		return riskEvaluationTier;
-	}
-
-	public void setRiskEvaluationTier(RiskEvaluationTier riskEvaluationTier) {
-		this.riskEvaluationTier = riskEvaluationTier;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
 
 }

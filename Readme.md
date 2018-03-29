@@ -112,9 +112,9 @@ Response: {
 			}
 
 			
-		#New Artitecture 
+#New Artitecture 
 			
-	 #Step 1: Create tier:
+#Step 1: Create tier:
    
    Api: http://localhost:8080/tier/create
    Method: POST

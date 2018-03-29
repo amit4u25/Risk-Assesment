@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.riskAssesment.model.AllQuestionAnswer;
-import com.riskAssesment.model.MaintenanceType;
 import com.riskAssesment.model.QuestionAnswer;
 import com.riskAssesment.model.RiskEvaluation;
+import com.riskAssesment.model.RiskEvaluationQuestion;
 import com.riskAssesment.model.TestResult;
-import com.riskAssesment.model.TierThreeQuestion;
+import com.riskAssesment.model.RiskEvaluationQuestionAnswer;
+import com.riskAssesment.repository.RiskEvaluationQuestionAnswerRepository;
+import com.riskAssesment.repository.RiskEvaluationQuestionRepository;
 import com.riskAssesment.repository.RiskEvalutionRepository;
 import com.riskAssesment.repository.TierThreeQuestionRepository;
 
@@ -26,6 +28,10 @@ public class ScoringService {
 	@Autowired
 	TierThreeQuestionRepository tierThreeQuestionRepository;
 	@Autowired
+	RiskEvaluationQuestionAnswerRepository riskEvaluationQuestionAnswerRepository;
+	@Autowired
+	RiskEvaluationQuestionRepository riskEvaluationQuestionRepository;
+	@Autowired
 	RiskEvalutionRepository riskEvalutionRepository;
 
 	public TestResult calculateRiskScore(AllQuestionAnswer allQuestionsAnswer) {
@@ -34,6 +40,7 @@ public class ScoringService {
 		double averageRiskScore = 0.0;
 		String riskAssesed = null;
 		RiskEvaluation riskEvaluation = new RiskEvaluation();
+		
 		TestResult testResult = new TestResult();
 		if (!StringUtils.isEmpty(allQuestionsAnswer.getBap())) {
 			riskEvaluation.setBap(allQuestionsAnswer.getBap());
@@ -45,13 +52,19 @@ public class ScoringService {
 			testResult.setReleaseVersion(allQuestionsAnswer.getReleaseVersion());
 		}
 		for (QuestionAnswer questionAnswer : allQuestionsAnswer.getQuestionAnswer()) {
+			RiskEvaluationQuestionAnswer riskEvaluationQuestionAnswer = new RiskEvaluationQuestionAnswer();
+			riskEvaluationQuestionAnswer.setBapId(allQuestionsAnswer.getBap());
+			riskEvaluationQuestionAnswer.setQuestionId(questionAnswer.getQuestionId());
+			riskEvaluationQuestionAnswer.setAnswer(questionAnswer.getAnswer());
 
 			if (questionAnswer.getAnswer()) {
-				TierThreeQuestion tierThreeQuestion = tierThreeQuestionRepository
+				RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
 						.findOne(questionAnswer.getQuestionId());
-				riskScore = riskScore + tierThreeQuestion.getWeight();
+				System.out.println("Weight : "+riskEvaluationQuestion.getWeight());
+				riskScore = riskScore + riskEvaluationQuestion.getWeight();
 				numberOfQuestion++;
 			}
+			riskEvaluationQuestionAnswerRepository.save(riskEvaluationQuestionAnswer);
 
 		}
 		if (riskScore > 0.0) {
@@ -76,6 +89,7 @@ public class ScoringService {
 		// Set return response
 		testResult.setScore(averageRiskScore);
 		testResult.setRiskcategory(riskAssesed);
+		testResult.setQuestionAnswer(allQuestionsAnswer.getQuestionAnswer());
 		return testResult;
 	}
 

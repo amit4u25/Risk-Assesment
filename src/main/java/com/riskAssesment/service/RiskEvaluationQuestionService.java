@@ -1,5 +1,7 @@
 package com.riskAssesment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,10 @@ public class RiskEvaluationQuestionService {
 
 	public RiskEvaluationQuestion createQuestion(RiskEvaluationQuestion riskEvaluationQuestion) {
 		return riskEvaluationQuestionRepository.save(riskEvaluationQuestion);
+	}
+	
+	public List<RiskEvaluationQuestion> getAllTierQuestion() {
+		return riskEvaluationQuestionRepository.findAll();
 	}
 
 }
