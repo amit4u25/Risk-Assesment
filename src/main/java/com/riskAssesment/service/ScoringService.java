@@ -1,5 +1,6 @@
 package com.riskAssesment.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,8 @@ import com.riskAssesment.model.AllQuestionAnswer;
 import com.riskAssesment.model.QuestionAnswer;
 import com.riskAssesment.model.RiskEvaluation;
 import com.riskAssesment.model.RiskEvaluationQuestion;
-import com.riskAssesment.model.TestResult;
 import com.riskAssesment.model.RiskEvaluationQuestionAnswer;
+import com.riskAssesment.model.TestResult;
 import com.riskAssesment.repository.RiskEvaluationQuestionAnswerRepository;
 import com.riskAssesment.repository.RiskEvaluationQuestionRepository;
 import com.riskAssesment.repository.RiskEvalutionRepository;
@@ -51,20 +52,27 @@ public class ScoringService {
 			riskEvaluation.setReleaseVersion(allQuestionsAnswer.getReleaseVersion());
 			testResult.setReleaseVersion(allQuestionsAnswer.getReleaseVersion());
 		}
+		List<QuestionAnswer> returnQuestionAndAnswers = new LinkedList<QuestionAnswer>();
 		for (QuestionAnswer questionAnswer : allQuestionsAnswer.getQuestionAnswer()) {
+			QuestionAnswer returnQuestionAndAnswer = new QuestionAnswer();
 			RiskEvaluationQuestionAnswer riskEvaluationQuestionAnswer = new RiskEvaluationQuestionAnswer();
 			riskEvaluationQuestionAnswer.setBapId(allQuestionsAnswer.getBap());
 			riskEvaluationQuestionAnswer.setQuestionId(questionAnswer.getQuestionId());
 			riskEvaluationQuestionAnswer.setAnswer(questionAnswer.getAnswer());
-
+			
+			RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
+					.findOne(questionAnswer.getQuestionId());
+			returnQuestionAndAnswer.setQuestionId(questionAnswer.getQuestionId());
+			returnQuestionAndAnswer.setQuestion(riskEvaluationQuestion.getQuestion());
+			returnQuestionAndAnswer.setAnswer(questionAnswer.getAnswer());
 			if (questionAnswer.getAnswer()) {
-				RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
-						.findOne(questionAnswer.getQuestionId());
+				
 				System.out.println("Weight : "+riskEvaluationQuestion.getWeight());
 				riskScore = riskScore + riskEvaluationQuestion.getWeight();
 				numberOfQuestion++;
 			}
 			riskEvaluationQuestionAnswerRepository.save(riskEvaluationQuestionAnswer);
+			returnQuestionAndAnswers.add(returnQuestionAndAnswer);
 
 		}
 		if (riskScore > 0.0) {
@@ -89,7 +97,7 @@ public class ScoringService {
 		// Set return response
 		testResult.setScore(averageRiskScore);
 		testResult.setRiskcategory(riskAssesed);
-		testResult.setQuestionAnswer(allQuestionsAnswer.getQuestionAnswer());
+		testResult.setQuestionAnswer(returnQuestionAndAnswers);
 		return testResult;
 	}
 

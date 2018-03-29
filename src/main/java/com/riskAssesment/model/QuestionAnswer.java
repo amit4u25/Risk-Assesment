@@ -13,6 +13,8 @@ import org.hibernate.validator.constraints.NotBlank;
 public class QuestionAnswer {
 
 	private Long questionId;
+	
+	private String question;
 
 	private Boolean answer;
 
@@ -30,5 +32,13 @@ public class QuestionAnswer {
 
 	public void setAnswer(Boolean answer) {
 		this.answer = answer;
+	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 }
