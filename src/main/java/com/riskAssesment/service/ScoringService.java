@@ -108,7 +108,7 @@ public class ScoringService {
 		return riskEvalutionRepository.findAll();
 	}
 
-	public RiskEvaluation getByBap(String bap) {
+	public List<RiskEvaluation> getByBap(String bap) {
 		return riskEvalutionRepository.findByBap(bap);
 	}
 }

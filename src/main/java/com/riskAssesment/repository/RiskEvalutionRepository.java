@@ -1,8 +1,9 @@
 package com.riskAssesment.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.riskAssesment.model.RiskEvaluation;
 
@@ -18,7 +19,6 @@ public interface RiskEvalutionRepository extends JpaRepository<RiskEvaluation, L
 	 
 	
 	@Query(value = "SELECT * FROM risk_evalution WHERE bap = ?1", nativeQuery = true)
-	RiskEvaluation findByBap(String bap);
-	
+	List<RiskEvaluation> findByBap(String bap);
 
 }

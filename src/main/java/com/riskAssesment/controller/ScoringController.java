@@ -49,7 +49,7 @@ public class ScoringController {
 	}
 
 	@GetMapping("/{bap}")
-	public RiskEvaluation getByBap(@PathVariable("bap") String bap) {
+	public List<RiskEvaluation> getByBap(@PathVariable("bap") String bap) {
 		return scoringService.getByBap(bap);
 	}
 
