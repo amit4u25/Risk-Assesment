@@ -41,7 +41,7 @@ public class ScoringService {
 		double averageRiskScore = 0.0;
 		String riskAssesed = null;
 		RiskEvaluation riskEvaluation = new RiskEvaluation();
-		
+
 		TestResult testResult = new TestResult();
 		if (!StringUtils.isEmpty(allQuestionsAnswer.getBap())) {
 			riskEvaluation.setBap(allQuestionsAnswer.getBap());
@@ -59,15 +59,15 @@ public class ScoringService {
 			riskEvaluationQuestionAnswer.setBapId(allQuestionsAnswer.getBap());
 			riskEvaluationQuestionAnswer.setQuestionId(questionAnswer.getQuestionId());
 			riskEvaluationQuestionAnswer.setAnswer(questionAnswer.getAnswer());
-			
+
 			RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
 					.findOne(questionAnswer.getQuestionId());
 			returnQuestionAndAnswer.setQuestionId(questionAnswer.getQuestionId());
 			returnQuestionAndAnswer.setQuestion(riskEvaluationQuestion.getQuestion());
 			returnQuestionAndAnswer.setAnswer(questionAnswer.getAnswer());
 			if (questionAnswer.getAnswer()) {
-				
-				System.out.println("Weight : "+riskEvaluationQuestion.getWeight());
+
+				System.out.println("Weight : " + riskEvaluationQuestion.getWeight());
 				riskScore = riskScore + riskEvaluationQuestion.getWeight();
 				numberOfQuestion++;
 			}
@@ -106,5 +106,9 @@ public class ScoringService {
 	 */
 	public List<RiskEvaluation> getAllTestResult() {
 		return riskEvalutionRepository.findAll();
+	}
+
+	public RiskEvaluation getByBap(String bap) {
+		return riskEvalutionRepository.findByBap(bap);
 	}
 }

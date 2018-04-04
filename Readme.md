@@ -219,4 +219,9 @@ Response: {
 	}
 	
 	
+#Step 6: Get risk score by bap
+	
+	API:- http://localhost:8080/score/BAP5
+	
+	
 	
