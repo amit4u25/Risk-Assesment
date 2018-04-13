@@ -13,6 +13,7 @@ import com.riskAssesment.model.RiskEvaluation;
 import com.riskAssesment.model.RiskEvaluationQuestion;
 import com.riskAssesment.model.RiskEvaluationQuestionAnswer;
 import com.riskAssesment.model.TestResult;
+import com.riskAssesment.model.TierThreeQuestion;
 import com.riskAssesment.repository.RiskEvaluationQuestionAnswerRepository;
 import com.riskAssesment.repository.RiskEvaluationQuestionRepository;
 import com.riskAssesment.repository.RiskEvalutionRepository;
@@ -60,15 +61,16 @@ public class ScoringService {
 			riskEvaluationQuestionAnswer.setQuestionId(questionAnswer.getQuestionId());
 			riskEvaluationQuestionAnswer.setAnswer(questionAnswer.getAnswer());
 
-			RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
-					.findOne(questionAnswer.getQuestionId());
+//			RiskEvaluationQuestion riskEvaluationQuestion = riskEvaluationQuestionRepository
+//					.findOne(questionAnswer.getQuestionId());
 			returnQuestionAndAnswer.setQuestionId(questionAnswer.getQuestionId());
-			returnQuestionAndAnswer.setQuestion(riskEvaluationQuestion.getQuestion());
+			
 			returnQuestionAndAnswer.setAnswer(questionAnswer.getAnswer());
 			if (questionAnswer.getAnswer()) {
-
-				System.out.println("Weight : " + riskEvaluationQuestion.getWeight());
-				riskScore = riskScore + riskEvaluationQuestion.getWeight();
+				TierThreeQuestion tierThreeQuestion = tierThreeQuestionRepository
+						.findOne(questionAnswer.getQuestionId());
+				returnQuestionAndAnswer.setQuestion(tierThreeQuestion.getQuestion());
+				riskScore = riskScore + tierThreeQuestion.getWeight();
 				numberOfQuestion++;
 			}
 			riskEvaluationQuestionAnswerRepository.save(riskEvaluationQuestionAnswer);
@@ -92,12 +94,21 @@ public class ScoringService {
 		}
 		riskEvaluation.setRiskAssesed(riskAssesed);
 		// Save
-		riskEvalutionRepository.save(riskEvaluation);
+		RiskEvaluation dbRiskEvaluation = riskEvalutionRepository.save(riskEvaluation);
 
 		// Set return response
 		testResult.setScore(averageRiskScore);
 		testResult.setRiskcategory(riskAssesed);
 		testResult.setQuestionAnswer(returnQuestionAndAnswers);
+		for (QuestionAnswer questionAnswer : allQuestionsAnswer.getQuestionAnswer()) {
+			RiskEvaluationQuestionAnswer riskEvaluationQuestionAnswer = new RiskEvaluationQuestionAnswer();
+			riskEvaluationQuestionAnswer.setBapId(allQuestionsAnswer.getBap());
+			riskEvaluationQuestionAnswer.setQuestionId(questionAnswer.getQuestionId());
+			riskEvaluationQuestionAnswer.setAnswer(questionAnswer.getAnswer());
+			riskEvaluationQuestionAnswer.setRiskEvaluationId(dbRiskEvaluation.getId());
+			riskEvaluationQuestionAnswerRepository.save(riskEvaluationQuestionAnswer);
+
+		}
 		return testResult;
 	}
 

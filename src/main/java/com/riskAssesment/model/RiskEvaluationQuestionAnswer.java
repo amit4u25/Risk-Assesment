@@ -50,6 +50,8 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	
 	@NotBlank
 	private String bapId;
+	
+	private Long riskEvaluationId;
 
 	
 
@@ -112,6 +114,14 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Long getRiskEvaluationId() {
+		return riskEvaluationId;
+	}
+
+	public void setRiskEvaluationId(Long riskEvaluationId) {
+		this.riskEvaluationId = riskEvaluationId;
 	}
 
 }
