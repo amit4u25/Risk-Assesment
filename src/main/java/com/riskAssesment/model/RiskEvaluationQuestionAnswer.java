@@ -43,18 +43,14 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	 
 	private Long questionId;
-	
+
 	private Boolean answer;
-	
+
 	@NotBlank
 	private String bapId;
-	
-	private Long riskEvaluationId;
 
-	
-
+	private String riskEvaluationId;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -73,8 +69,6 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	 
 
 	public Long getQuestionId() {
 		return questionId;
@@ -116,11 +110,11 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getRiskEvaluationId() {
+	public String getRiskEvaluationId() {
 		return riskEvaluationId;
 	}
 
-	public void setRiskEvaluationId(Long riskEvaluationId) {
+	public void setRiskEvaluationId(String riskEvaluationId) {
 		this.riskEvaluationId = riskEvaluationId;
 	}
 
