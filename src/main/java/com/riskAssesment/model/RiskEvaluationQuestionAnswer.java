@@ -39,9 +39,9 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
-	// private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	private Long questionId;
 
@@ -49,7 +49,16 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 
 	@NotBlank
 	private String bapId;
-	@Id
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Column(name = "risk_evaluation_id", nullable = false)
 	private String riskEvaluationId;
 
 	@Column(nullable = false, updatable = false)

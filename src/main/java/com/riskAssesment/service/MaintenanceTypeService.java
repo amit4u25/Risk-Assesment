@@ -3,6 +3,7 @@ package com.riskAssesment.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.riskAssesment.model.MaintenanceType;
@@ -30,9 +31,14 @@ public class MaintenanceTypeService {
 	 * @return List<MaintenanceType>
 	 */
 	public List<MaintenanceType> getAllMaintenanceType() {
-		return maintenanceTypeRepository.findAll();
+
+		Sort sort = new Sort(Sort.Direction.ASC, "changeType");
+
+		return (List<MaintenanceType>) maintenanceTypeRepository.findAll(sort);
+		// return maintenanceTypeRepository.findAll(Sort.Direction.ASC,
+		// "id").getContent();
 	}
-	
+
 	public MaintenanceType getById(Long id) {
 		return maintenanceTypeRepository.findOne(id);
 	}

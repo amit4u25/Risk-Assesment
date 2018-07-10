@@ -1,6 +1,6 @@
 package com.riskAssesment.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.riskAssesment.model.MaintenanceType;
 
@@ -11,6 +11,6 @@ import com.riskAssesment.model.MaintenanceType;
  *         operations on the entity, and a default implementation of
  *         JpaRepository called SimpleJpaRepository.
  */
-public interface MaintenanceTypeRepository extends JpaRepository<MaintenanceType, Long> {
+public interface MaintenanceTypeRepository extends PagingAndSortingRepository<MaintenanceType, Long> {
 
 }
