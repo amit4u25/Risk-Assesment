@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -40,12 +41,17 @@ public class MaintenanceType implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	// private Long id;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	private String id;
 
 	@NotBlank
-	@Column(unique=true)
+	@Column(unique = true)
 	private String changeType;
 
 	@Column(nullable = false, updatable = false)
@@ -63,20 +69,17 @@ public class MaintenanceType implements Serializable {
 
 	public MaintenanceType() {
 	}
-	
 
-	public MaintenanceType(Long id, String changeType) {
+	public MaintenanceType(String id, String changeType) {
 		super();
 		this.id = id;
 		this.changeType = changeType;
 	}
 
-
 	public MaintenanceType(String changeType) {
 		super();
 		this.changeType = changeType;
 	}
-
 
 	public Set<TierTwoQuestion> getTierTwoQuestion() {
 		return tierTwoQuestion;
@@ -87,11 +90,13 @@ public class MaintenanceType implements Serializable {
 		this.tierTwoQuestion = tierTwoQuestion;
 	}
 
-	public Long getId() {
+	 
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -13,6 +13,8 @@
 //import org.junit.runner.RunWith;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.MediaType;
@@ -27,8 +29,14 @@
 //import com.riskAssesment.service.MaintenanceTypeService;
 //import com.riskAssesment.util.TestUtils;
 //
+////@RunWith(SpringRunner.class)
+////@WebMvcTest(MaintenanceTypeController.class)
+//
 //@RunWith(SpringRunner.class)
-//@WebMvcTest(MaintenanceTypeController.class)
+//@SpringBootTest(
+//    classes = MaintenanceTypeController.class,
+//    webEnvironment = WebEnvironment.RANDOM_PORT
+//)
 //public class MaintenanceTypeControllerTest {
 //
 //	@Autowired
@@ -60,7 +68,7 @@
 //
 //		MaintenanceType resultMaintenanceType = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
 //				MaintenanceType.class);
-//		System.out.println("resultMaintenanceType : "+resultMaintenanceType.getId());
+//		System.out.println("resultMaintenanceType : " + resultMaintenanceType.getId());
 //		assertNotNull(resultMaintenanceType);
 //		assertEquals(1l, resultMaintenanceType.getId().longValue());
 //	}
@@ -73,8 +81,8 @@
 //		when(maintenanceService.getAllMaintenanceType()).thenReturn(maintenanceList);
 //
 //		// execute
-//		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(URL +"/all").accept(MediaType.APPLICATION_JSON_UTF8))
-//				.andReturn();
+//		MvcResult result = mockMvc
+//				.perform(MockMvcRequestBuilders.get(URL + "/all").accept(MediaType.APPLICATION_JSON_UTF8)).andReturn();
 //
 //		// verify
 //		int status = result.getResponse().getStatus();

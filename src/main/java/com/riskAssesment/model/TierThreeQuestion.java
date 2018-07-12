@@ -1,6 +1,8 @@
 package com.riskAssesment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,9 +30,14 @@ public class TierThreeQuestion implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private Long id;
+	
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",
+	  strategy = "uuid")
+	private String id;
 
 	@NotBlank
 	@Column(unique=true)
@@ -52,11 +59,13 @@ public class TierThreeQuestion implements Serializable {
 	@LastModifiedDate
 	private Date updatedAt;
 
-	public Long getId() {
+	 
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
