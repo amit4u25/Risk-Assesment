@@ -43,7 +43,7 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Long questionId;
+	private String questionId;
 
 	private Boolean answer;
 
@@ -71,11 +71,11 @@ public class RiskEvaluationQuestionAnswer implements Serializable {
 	@LastModifiedDate
 	private Date updatedAt;
 
-	public Long getQuestionId() {
+	public String getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Long questionId) {
+	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
 

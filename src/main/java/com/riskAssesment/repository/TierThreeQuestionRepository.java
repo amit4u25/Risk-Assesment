@@ -1,6 +1,7 @@
 package com.riskAssesment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.riskAssesment.model.TierThreeQuestion;;
 
@@ -12,5 +13,7 @@ import com.riskAssesment.model.TierThreeQuestion;;
  *         JpaRepository called SimpleJpaRepository.
  */
 public interface TierThreeQuestionRepository extends JpaRepository<TierThreeQuestion, Long> {
+	@Query(value = "SELECT * FROM tier_three_question WHERE id = ?", nativeQuery = true)
+	TierThreeQuestion findOne(String questionId);
 
 }

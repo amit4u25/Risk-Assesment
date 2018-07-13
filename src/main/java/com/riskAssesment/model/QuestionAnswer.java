@@ -12,17 +12,17 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class QuestionAnswer {
 
-	private Long questionId;
+	private String questionId;
 	
 	private String question;
 
 	private Boolean answer;
 
-	public Long getQuestionId() {
+	public String getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Long questionId) {
+	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
 
